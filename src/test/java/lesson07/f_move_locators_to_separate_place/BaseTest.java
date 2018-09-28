@@ -1,4 +1,4 @@
-package lesson07.e_add_basetest;
+package lesson07.f_move_locators_to_separate_place;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

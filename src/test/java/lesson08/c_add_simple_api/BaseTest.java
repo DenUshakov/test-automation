@@ -1,4 +1,4 @@
-package lesson07.e_add_basetest;
+package lesson08.c_add_simple_api;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public abstract class BaseTest {
+public abstract class BaseTest extends SimpleAPI{
 
     static WebDriver wd;
 
@@ -45,12 +45,17 @@ public abstract class BaseTest {
         wd.manage().timeouts().pageLoadTimeout(10, SECONDS);
 //        wd.manage().timeouts().implicitlyWait(10, SECONDS);
 
-        wd.get("http://automationpractice.com/index.php");
+//        wd.get("http://automationpractice.com/index.php");
         wd.manage().window().setSize(new Dimension(1920,1080));
     }
 
     @AfterClass
     public static void tearDown(){
         wd.quit();
+    }
+
+    @Override
+    WebDriver getWebDriver() {
+        return wd;
     }
 }

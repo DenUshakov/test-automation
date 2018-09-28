@@ -1,4 +1,4 @@
-package lesson07.e_add_basetest;
+package lesson07.f_move_locators_to_separate_place;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 
-public class FirstTest extends BaseTest{
+public class FirstTest extends BaseTest {
 
     @Test
     public void verifyFirstSearchResultShouldRefresh() {
@@ -24,10 +24,7 @@ public class FirstTest extends BaseTest{
                 .until(textToBePresentInElementLocated(landingPage.firstAdvice, query2));
     }
 
-    class LandingPage {
-
-        By searchField = By.id("search_query_top");
-        By firstAdvice = By.xpath("//*[@id=\"index\"]/div[2]/ul/li[1]");
+    class LandingPage implements LandingPageLocators {
 
         void searchFor(String query){
             $(searchField).click();

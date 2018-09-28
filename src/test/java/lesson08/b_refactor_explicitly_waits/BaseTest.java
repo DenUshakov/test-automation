@@ -1,4 +1,4 @@
-package lesson07.e_add_basetest;
+package lesson08.b_refactor_explicitly_waits;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -45,7 +45,7 @@ public abstract class BaseTest {
         wd.manage().timeouts().pageLoadTimeout(10, SECONDS);
 //        wd.manage().timeouts().implicitlyWait(10, SECONDS);
 
-        wd.get("http://automationpractice.com/index.php");
+//        wd.get("http://automationpractice.com/index.php");
         wd.manage().window().setSize(new Dimension(1920,1080));
     }
 

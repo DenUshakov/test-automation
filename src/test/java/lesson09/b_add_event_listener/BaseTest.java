@@ -1,5 +1,7 @@
-package lesson07.e_add_basetest;
+package lesson09.b_add_event_listener;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -8,49 +10,61 @@ import org.junit.runner.Description;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+
+import java.awt.*;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public abstract class BaseTest {
+public abstract class BaseTest extends SimpleAPI {
 
-    static WebDriver wd;
+    private static final Logger LOG = LogManager.getLogger(BaseTest.class);
+
+    static WebDriver webDriver;
 
     @Rule
     public TestWatcher testWatcher = new TestWatcher() {
         @Override
         protected void succeeded(Description description) {
-            System.out.println(
-                    String.format("Test '%s' - was succeeded.", description.getMethodName()));
+            LOG.info(String.format("Test '%s' - was succeeded.", description.getMethodName()));
             super.succeeded(description);
         }
 
         @Override
         protected void failed(Throwable e, Description description) {
-            System.out.println(
-                    String.format("Test '%s' - was failed.", description.getMethodName()));
+            LOG.info(String.format("Test '%s' - was failed.", description.getMethodName()));
             super.failed(e, description);
         }
 
         @Override
         protected void starting(Description description) {
-            System.out.println(
-                    String.format("Test '%s' - has been started.", description.getMethodName()));
+            LOG.info(String.format("Test '%s' - has been started.", description.getMethodName()));
             super.starting(description);
         }
     };
 
     @BeforeClass
     public static void setUp(){
-        wd = new ChromeDriver();
+        EventFiringWebDriver wd = new EventFiringWebDriver((new ChromeDriver()));
+        wd.register(new EventHandler());
+        webDriver = wd;
+        LOG.debug("web Driver has been started");
         wd.manage().timeouts().pageLoadTimeout(10, SECONDS);
 //        wd.manage().timeouts().implicitlyWait(10, SECONDS);
 
-        wd.get("http://automationpractice.com/index.php");
+//        wd.get("http://automationpractice.com/index.php");
         wd.manage().window().setSize(new Dimension(1920,1080));
     }
 
     @AfterClass
     public static void tearDown(){
-        wd.quit();
+
+        webDriver.quit();
+        LOG.debug("web Driver has shut down");
+    }
+
+    @Override
+    WebDriver getWebDriver() {
+        return webDriver;
     }
 }
