@@ -1,4 +1,4 @@
-package lesson09.b_add_event_listener;
+package utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
+
+import java.util.Arrays;
 
 public class EventHandler extends AbstractWebDriverEventListener{
     private static final Logger LOG = LogManager.getLogger(EventHandler.class);
@@ -17,16 +19,23 @@ public class EventHandler extends AbstractWebDriverEventListener{
 
     @Override
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-        LOG.debug("Finding element by locator: " + by);
+        LOG.debug("Finding element: " + by);
     }
 
     @Override
     public void beforeClickOn(WebElement element, WebDriver driver) {
-        LOG.info("Going to click on: " + element);
+        LOG.debug("Going to click on element: " + getElementLocator(element));
     }
 
     @Override
     public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
-        LOG.info("Going to type value: " + keysToSend + " to element: " + element);
+        LOG.info("Going to set value: " + Arrays.toString(keysToSend) + " for element: " + getElementLocator(element));
+    }
+
+    private String getElementLocator(WebElement element){
+        String elDescription = element.toString();
+        int descriptionLength = elDescription.length();
+        int startIndex = elDescription.indexOf("-> ") + 3;
+        return "by " + elDescription.substring(startIndex, descriptionLength-1);
     }
 }

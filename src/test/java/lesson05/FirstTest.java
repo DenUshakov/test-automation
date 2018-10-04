@@ -17,6 +17,7 @@ public class FirstTest {
     static WebDriver wd;
     @BeforeClass
     public static void setup() {
+        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
         wd = new ChromeDriver();
         wd.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

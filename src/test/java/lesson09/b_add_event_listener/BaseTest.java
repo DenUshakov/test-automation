@@ -12,8 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import java.awt.*;
-
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public abstract class BaseTest extends SimpleAPI {
@@ -45,22 +43,22 @@ public abstract class BaseTest extends SimpleAPI {
 
     @BeforeClass
     public static void setUp(){
-        EventFiringWebDriver wd = new EventFiringWebDriver((new ChromeDriver()));
+        EventFiringWebDriver wd = new EventFiringWebDriver(new ChromeDriver());
         wd.register(new EventHandler());
+
         webDriver = wd;
-        LOG.debug("web Driver has been started");
-        wd.manage().timeouts().pageLoadTimeout(10, SECONDS);
+        LOG.debug("Webdriver has been started.");
+        webDriver.manage().timeouts().pageLoadTimeout(10, SECONDS);
 //        wd.manage().timeouts().implicitlyWait(10, SECONDS);
 
 //        wd.get("http://automationpractice.com/index.php");
-        wd.manage().window().setSize(new Dimension(1920,1080));
+        webDriver.manage().window().setSize(new Dimension(1920,1080));
     }
 
     @AfterClass
     public static void tearDown(){
-
         webDriver.quit();
-        LOG.debug("web Driver has shut down");
+        LOG.debug("Webdriver has been shut down.");
     }
 
     @Override

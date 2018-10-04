@@ -1,4 +1,4 @@
-package lesson09.b_add_event_listener;
+package lesson09.c_creds_manager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
